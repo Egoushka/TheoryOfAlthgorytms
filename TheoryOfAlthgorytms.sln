@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheoryOfAlthgorytms", "TheoryOfAlthgorytms\TheoryOfAlthgorytms.csproj", "{37CCDDA2-5789-4629-8895-53823CFCD03C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37CCDDA2-5789-4629-8895-53823CFCD03C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37CCDDA2-5789-4629-8895-53823CFCD03C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37CCDDA2-5789-4629-8895-53823CFCD03C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37CCDDA2-5789-4629-8895-53823CFCD03C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5113EC3A-CB3C-48C1-96EA-69BAB04B4428}
+	EndGlobalSection
+EndGlobal
