@@ -36,7 +36,13 @@ namespace TheoryOfAlthgorytms
         private static void Main(string[] args)
         {
             String[] strs = { "GAGA aa", "BABABABA aaa a      ", "BAB" };
-            Sorting.BubbleSort(strs, SortingTypes.CountByWords(strs));
+            Sorting.ShellSorting(strs, SortingTypes.CountByWords(strs));
+
+            for (int index = 0, length = strs.Length; index < length; ++index)
+            {
+                Console.WriteLine(strs[index]);
+            }
+            Console.ReadKey();
         }
     }
 }
