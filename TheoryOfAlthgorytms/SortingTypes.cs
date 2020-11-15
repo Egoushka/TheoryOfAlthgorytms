@@ -67,5 +67,30 @@ namespace TheoryOfAlthgorytms
 
             return sortedStrsByCount;
         }
+
+        static public Int32[] CountByPunctSings(String[] strs)
+        {
+            int length = strs.Length;
+            Int32[] sortedStrsByCount = new Int32[length];
+
+            String sings = ",.:-;";
+            int singsCount = sings.Length;
+            bool isWord;
+            for (int index = 0; index < length; ++index)
+            {
+                for (int index2 = 0, strLength = strs[index].Length; index2 < strLength; ++index2)
+                {
+                    for (int singIndex = 0; singIndex < singsCount; ++singIndex)
+                    {
+                        if (sings[singIndex] == strs[index][index2])
+                        {
+                            ++sortedStrsByCount[index];
+                            break;
+                        }
+                    }
+                }
+            }
+            return sortedStrsByCount;
+        }
     }
 }

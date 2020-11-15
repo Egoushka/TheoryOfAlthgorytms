@@ -56,10 +56,10 @@ namespace TheoryOfAlthgorytms
 
         static public void InsertSort(String[] strs, int[] sortedIndexs)
         {
-            int n = strs.Length;
+            int length = strs.Length;
             int tmpInt;
             string tmpStr;
-            for (int index = 1, index2; index < n; index++)
+            for (int index = 1, index2; index < length; index++)
             {
                 tmpInt = sortedIndexs[index];
                 tmpStr = strs[index];
@@ -81,12 +81,12 @@ namespace TheoryOfAlthgorytms
 
         static public void ShellSorting(String[] strs, int[] sortedIndexs)
         {
-            int n = strs.Length;
+            int length = strs.Length;
             int tmpInt;
             string tmpStr;
-            for (int step = n / 2; step > 0; step /= 2)
+            for (int step = length / 2; step > 0; step /= 2)
             {
-                for (int i = step; i < n; i++)
+                for (int i = step; i < length; i++)
                 {
                     for (int j = i - step; j >= 0 && sortedIndexs[j] > sortedIndexs[j + step]; j -= step)
                     {
