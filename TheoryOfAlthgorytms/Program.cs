@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace TheoryOfAlthgorytms
@@ -7,10 +8,12 @@ namespace TheoryOfAlthgorytms
     {
         static public void Sort(String[] strs)
         {
-            Console.WriteLine("Which method do you want to sort?\n1 - Bubble sort\n2 - Insertion\n3 - Selection\n4 - Shell");
-            Int32.TryParse(Console.ReadLine(), out int choice);
-            Console.WriteLine("Which exactly do you want to sort?\n1 - sort by count of letters 'A'\n2 - sort by length\n3 - sort by counts of words\n4 - sort by count of punc signs");
+          
+            Console.WriteLine("Which exactly do you want to sort?\n1 - sort by count of letters 'A'\n2 - sort by length\n3 - sort by counts of words\n4 - sort by number of punc signs\n5 - sort by the number of words that consist of numbers");
             Int32.TryParse(Console.ReadLine(), out int choice2);
+            Console.WriteLine("Sort by descending order?(1 - yes, 2 - no)");
+            if (Console.ReadLine() == "1")
+                Array.Reverse(strs); 
             int[] sortedArrByIndexes = new int[strs.Length];
             switch (choice2)
             {
@@ -34,53 +37,72 @@ namespace TheoryOfAlthgorytms
                         sortedArrByIndexes = SortingTypes.CountByPunctSings(strs);
                         break;
                     }
+                case 5:
+                    {
+                        sortedArrByIndexes = SortingTypes.CountByWordsDigit(strs);
+                        break;
+                    }
+                    
 
                 default:
                     break;
             }
-            switch (choice)
-            {
-                case 1:
-                    {
-                        Sorting.BubbleSort(strs, sortedArrByIndexes);
-                        break;
-                    }
-                case 2:
-                    {
-                        Sorting.InsertSort(strs, sortedArrByIndexes);
+            Stopwatch stopWatch = new Stopwatch();
 
-                        break;
-                    }
-                case 3:
-                    {
-                        Sorting.SelectionSort(strs, sortedArrByIndexes);
 
-                        break;
-                    }
-                case 4:
-                    {
-                        Sorting.ShellSorting(strs, sortedArrByIndexes);
+            TimeSpan elapsedTime;
 
-                        break;
-                    }
+            String[] tmp = (string[])strs.Clone();
+            int[] tmpInts = (int[])sortedArrByIndexes.Clone();
+            Console.WriteLine("BubbleSort");
+            stopWatch.Start();
+            Sorting.BubbleSort(strs, sortedArrByIndexes);
+            stopWatch.Stop();
 
-                default:
-                    break;
-            }
-            Console.WriteLine("Sort by descending order?(1 - yes, 2 - no)");
-            if (Console.ReadLine() == "1")
-                Array.Reverse(strs);
+            Console.WriteLine($"Time spent on sorting -> {elapsedTime = stopWatch.Elapsed}\n");
+            stopWatch.Reset();
+
+            strs = tmp.Clone() as string[];
+            sortedArrByIndexes = tmpInts.Clone() as int[];
+
+            Console.WriteLine("InsertSort");
+            stopWatch.Start();
+            Sorting.InsertSort(strs, sortedArrByIndexes);
+            stopWatch.Stop();
+            Console.WriteLine($"Time spent on sorting -> {elapsedTime = stopWatch.Elapsed}\n");
+            stopWatch.Reset();
+
+            strs = (string[])tmp.Clone();
+            sortedArrByIndexes = tmpInts.Clone() as int[];
+
+
+            Console.WriteLine("SelectionSort");
+            stopWatch.Start();
+            Sorting.SelectionSort(strs, sortedArrByIndexes);
+            stopWatch.Stop();
+
+            Console.WriteLine($"Time spent on sorting -> {elapsedTime = stopWatch.Elapsed}\n");
+            stopWatch.Reset();
+
+            strs = (string[])tmp.Clone();
+            sortedArrByIndexes = tmpInts.Clone() as int[];
+
+
+            Console.WriteLine("ShellSorting");
+            stopWatch.Start();
+            Sorting.ShellSorting(strs, sortedArrByIndexes);
+            stopWatch.Stop();
+
+            Console.WriteLine($"Time spent on sorting -> {elapsedTime}\n");
+            stopWatch.Reset();
+ 
         }
 
         private static void Main(string[] args)
         {
-            String[] strs = { "GAGA,, aa", "BABABABA,,,,, aaa a :     ", "BAB " };
-            Sort(strs);
+            string[] lines = System.IO.File.ReadAllLines("1.txt");
 
-            for (int index = 0, length = strs.Length; index < length; ++index)
-            {
-                Console.WriteLine(strs[index]);
-            }
+            Sort(lines);
             Console.ReadKey();
         }
     }

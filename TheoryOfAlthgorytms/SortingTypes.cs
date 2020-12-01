@@ -92,5 +92,36 @@ namespace TheoryOfAlthgorytms
             }
             return sortedStrsByCount;
         }
+        static public Int32[] CountByWordsDigit(String[] strs)
+        {
+            int length = strs.Length;
+            Int32[] sortedStrsByCount = new Int32[length];
+
+            bool isDigitWord;
+            for (int index = 0; index < length; ++index)
+            {
+
+                for (int index2 = 0, lenghtCurWord = strs[index].Length; index2 < lenghtCurWord; ++index2)
+                {
+
+                    if (!Char.IsDigit(strs[index][index2]) && strs[index][index2] != ' ')
+                    {
+
+                        do
+                        {
+                            ++index2;
+                        } while (index2 != lenghtCurWord && strs[index][index2] != ' ');
+                        continue;
+                    }
+                    if (strs[index][index2] == ' ' || index2 + 1 == lenghtCurWord)
+                    {
+                        ++sortedStrsByCount[index];
+                        isDigitWord = false;
+                    }
+                }
+            }
+
+            return sortedStrsByCount;
+        }
     }
 }
