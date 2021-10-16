@@ -4,124 +4,117 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheoryOfAlthgorytms
+namespace TheoryOfAlgorytms
 {
     internal static class SortingTypes
     {
-        static public Int32[] CountByLettersA(String[] strs)
+        public static int[] CountByLettersA(string[] strings)
         {
-            int length = strs.Length;
-            Int32[] sortedStrsByCount = new Int32[length];
+            var length = strings.Length;
+            var sortedStringsByCount = new int[length];
 
-            for (int index = 0; index < length; ++index)
+            for (var index = 0; index < length; ++index)
             {
-                for (int index2 = 0, lenghtCurWord = strs[index].Length; index2 < lenghtCurWord; ++index2)
+                for (int index2 = 0, lengthCurWord = strings[index].Length; index2 < lengthCurWord; ++index2)
                 {
-                    if (strs[index][index2] == 'A')
-                        ++sortedStrsByCount[index];
+                    if (strings[index][index2] == 'A')
+                        ++sortedStringsByCount[index];
                 }
             }
 
-            return sortedStrsByCount;
+            return sortedStringsByCount;
         }
 
-        static public Int32[] CountByLength(String[] strs)
+        public static int[] CountByLength(string[] strings)
         {
-            int length = strs.Length;
-            Int32[] sortedStrsByCount = new Int32[length];
+            var length = strings.Length;
+            var sortedStringsByCount = new int[length];
 
-            for (int index = 0; index < length; ++index)
+            for (var index = 0; index < length; ++index)
             {
-                sortedStrsByCount[index] = strs[index].Length;
+                sortedStringsByCount[index] = strings[index].Length;
             }
 
-            return sortedStrsByCount;
+            return sortedStringsByCount;
         }
 
-        static public Int32[] CountByWords(String[] strs)
+        public static int[] CountByWords(string[] strings)
         {
-            int length = strs.Length;
-            Int32[] sortedStrsByCount = new Int32[length];
+            var length = strings.Length;
+            var sortedStringsByCount = new int[length];
 
             bool isWord;
-            for (int index = 0; index < length; ++index)
+            for (var index = 0; index < length; ++index)
             {
                 isWord = false;
-                for (int index2 = 0, lenghtCurWord = strs[index].Length; index2 < lenghtCurWord; ++index2)
+                for (int index2 = 0, lengthCurWord = strings[index].Length; index2 < lengthCurWord; ++index2)
                 {
-                    //if (((strs[index][index2] == ' ' || strs[index][index2] == ',' || strs[index][index2] == '.' || strs[index][index2] == '–') && (index2 + 1 != lenghtCurWord || strs[index][index2 + 1] != ' ')))
-                    //    ++sortedStrsByCount[index];
-                    if (strs[index][index2] == ' ' && isWord)
+                    if (strings[index][index2] == ' ' && isWord)
                     {
-                        ++sortedStrsByCount[index];
+                        ++sortedStringsByCount[index];
                         isWord = false;
                     }
-                    if (!isWord && Char.IsLetterOrDigit(strs[index][index2]))
+                    if (!isWord && char.IsLetterOrDigit(strings[index][index2]))
                     {
                         isWord = true;
                     }
                 }
                 if (isWord)
-                    ++sortedStrsByCount[index];
+                    ++sortedStringsByCount[index];
             }
 
-            return sortedStrsByCount;
+            return sortedStringsByCount;
         }
 
-        static public Int32[] CountByPunctSings(String[] strs)
+        public static int[] CountByPunctSings(string[] strings)
         {
-            int length = strs.Length;
-            Int32[] sortedStrsByCount = new Int32[length];
+            var length = strings.Length;
+            var sortedStringsByCount = new int[length];
 
-            String sings = ",.:-;";
-            int singsCount = sings.Length;
-            bool isWord;
-            for (int index = 0; index < length; ++index)
+            var sings = ",.:-;";
+            var singsCount = sings.Length;
+            for (var index = 0; index < length; ++index)
             {
-                for (int index2 = 0, strLength = strs[index].Length; index2 < strLength; ++index2)
+                for (int index2 = 0, strLength = strings[index].Length; index2 < strLength; ++index2)
                 {
-                    for (int singIndex = 0; singIndex < singsCount; ++singIndex)
+                    for (var singIndex = 0; singIndex < singsCount; ++singIndex)
                     {
-                        if (sings[singIndex] == strs[index][index2])
-                        {
-                            ++sortedStrsByCount[index];
-                            break;
-                        }
+                        if (sings[singIndex] != strings[index][index2]) continue;
+
+                        ++sortedStringsByCount[index];
+                        break;
                     }
                 }
             }
-            return sortedStrsByCount;
+            return sortedStringsByCount;
         }
-        static public Int32[] CountByWordsDigit(String[] strs)
+        public static int[] CountByWordsDigit(string[] strings)
         {
-            int length = strs.Length;
-            Int32[] sortedStrsByCount = new Int32[length];
+            var length = strings.Length;
+            var sortedStringsByCount = new int[length];
 
-            bool isDigitWord;
-            for (int index = 0; index < length; ++index)
+            for (var index = 0; index < length; ++index)
             {
-
-                for (int index2 = 0, lenghtCurWord = strs[index].Length; index2 < lenghtCurWord; ++index2)
+                for (int index2 = 0, lengthCurWord = strings[index].Length; index2 < lengthCurWord; ++index2)
                 {
 
-                    if (!Char.IsDigit(strs[index][index2]) && strs[index][index2] != ' ')
+                    if (!char.IsDigit(strings[index][index2]) && strings[index][index2] != ' ')
                     {
 
                         do
                         {
                             ++index2;
-                        } while (index2 != lenghtCurWord && strs[index][index2] != ' ');
+                        } while (index2 != lengthCurWord && strings[index][index2] != ' ');
                         continue;
                     }
-                    if (strs[index][index2] == ' ' || index2 + 1 == lenghtCurWord)
-                    {
-                        ++sortedStrsByCount[index];
-                        isDigitWord = false;
-                    }
+
+                    if (strings[index][index2] != ' ' && index2 + 1 != lengthCurWord) continue;
+
+                    ++sortedStringsByCount[index];
                 }
             }
 
-            return sortedStrsByCount;
+            return sortedStringsByCount;
         }
     }
 }
