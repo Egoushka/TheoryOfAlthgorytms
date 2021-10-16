@@ -1,27 +1,22 @@
 ﻿using System;
 
-namespace TheoryOfAlgorytms
+namespace TheoryOfAlgorithms
 {
     internal static class Sorting
     {
-        public static void BubbleSort(string[] strings, int[] sortedIndexs)
+        public static void BubbleSort(string[] strings, int[] sortedIndexes)
         {
             ulong transposition = 0, comparisons = 0;
-            string str;
-            for (int index = strings.Length - 1, index2 = 0, tmp; index > 0; --index)
+            for (int index = strings.Length - 1, index2 = 0; index > 0; --index)
             {
                 while (index2 < index)
                 {
-                    if (sortedIndexs[index2] > sortedIndexs[index2 + 1])
+                    if (sortedIndexes[index2] > sortedIndexes[index2 + 1])
                     {
                         ++transposition;
-                        tmp = sortedIndexs[index2];
-                        sortedIndexs[index2] = sortedIndexs[index2 + 1];
-                        sortedIndexs[index2 + 1] = tmp;
 
-                        str = strings[index2];
-                        strings[index2] = strings[index2 + 1];
-                        strings[index2 + 1] = str;
+                        (sortedIndexes[index2], sortedIndexes[index2 + 1]) = (sortedIndexes[index2 + 1], sortedIndexes[index2]);
+                        (strings[index2], strings[index2 + 1]) = (strings[index2 + 1], strings[index2]);
                     }
                     ++comparisons;
                     ++index2;
@@ -31,10 +26,8 @@ namespace TheoryOfAlgorytms
             Console.WriteLine($"Transposition -> {transposition}\nComparisons -> {comparisons}");
         }
 
-        public static void SelectionSort(string[] strings, int[] sortedIndexs)
+        public static void SelectionSort(string[] strings, int[] sortedIndexes)
         {
-            int tmpInt;
-            string tmpStr;
             var length = strings.Length;
             ulong transposition = 0, comparisons = 0;
 
@@ -43,44 +36,38 @@ namespace TheoryOfAlgorytms
                 k = i;
                 for (j = i + 1; j < length; ++j,++comparisons)
                 {
-                    if (sortedIndexs[k] > sortedIndexs[j])
+                    if (sortedIndexes[k] > sortedIndexes[j])
                         k = j;
                 }
-                if (k != i)
-                {
-                    ++transposition;
-                    tmpInt = sortedIndexs[k];
-                    sortedIndexs[k] = sortedIndexs[i];
-                    sortedIndexs[i] = tmpInt;
 
-                    tmpStr = strings[k];
-                    strings[k] = strings[i];
-                    strings[i] = tmpStr;
-                }
+                if (k == i) continue;
+
+                ++transposition;
+
+                (sortedIndexes[k], sortedIndexes[i]) = (sortedIndexes[i], sortedIndexes[k]);
+                (strings[k], strings[i]) = (strings[i], strings[k]);
             }
             Console.WriteLine($"Transposition -> {transposition}\nComparisons -> {comparisons}");
         }
 
-        public static void InsertSort(string[] strings, int[] sortedIndexs)
+        public static void InsertSort(string[] strings, int[] sortedIndexes)
         {
             var length = strings.Length;
             ulong transposition = 0, comparisons = 0;
-            int tmpInt;
-            string tmpStr;
 
             for (int index = 1, index2; index < length; index++)
             {
-                tmpInt = sortedIndexs[index];
-                tmpStr = strings[index];
+                var tmpInt = sortedIndexes[index];
+                var tmpStr = strings[index];
                 for (index2 = index - 1; index2 >= 0;++comparisons)
                 {
-                    if (tmpInt < sortedIndexs[index2])
+                    if (tmpInt < sortedIndexes[index2])
                     {
                         ++transposition;
-                        sortedIndexs[index2 + 1] = sortedIndexs[index2];
+                        sortedIndexes[index2 + 1] = sortedIndexes[index2];
                         strings[index2 + 1] = strings[index2];
                         index2--;
-                        sortedIndexs[index2 + 1] = tmpInt;
+                        sortedIndexes[index2 + 1] = tmpInt;
                         strings[index2 + 1] = tmpStr;
                     }
                     else
@@ -90,26 +77,20 @@ namespace TheoryOfAlgorytms
             Console.WriteLine($"Transposition -> {transposition}\nComparisons -> {comparisons}");
         }
 
-        public static void ShellSorting(string[] strings, int[] sortedIndexs)
+        public static void ShellSorting(string[] strings, int[] sortedIndexes)
         {
             ulong transposition = 0, comparisons = 0;
             var length = strings.Length;
-            int tmpInt;
-            string tmpStr;
             for (var step = length / 2; step > 0; step /= 2)
             {
                 for (var i = step; i < length; i++)
                 {
-                    for (var j = i - step; j >= 0 && sortedIndexs[j] > sortedIndexs[j + step]; j -= step, ++comparisons)
+                    for (var j = i - step; j >= 0 && sortedIndexes[j] > sortedIndexes[j + step]; j -= step, ++comparisons)
                     {
                         ++transposition;
-                        tmpInt = sortedIndexs[j];
-                        sortedIndexs[j] = sortedIndexs[j + step];
-                        sortedIndexs[j + step] = tmpInt;
+                        (sortedIndexes[j], sortedIndexes[j + step]) = (sortedIndexes[j + step], sortedIndexes[j]);
 
-                        tmpStr = strings[j];
-                        strings[j] = strings[j + step];
-                        strings[j + step] = tmpStr;
+                        (strings[j], strings[j + step]) = (strings[j + step], strings[j]);
                     }
                 }
             }

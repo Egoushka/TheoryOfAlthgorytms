@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 
-namespace TheoryOfAlgorytms
+namespace TheoryOfAlgorithms
 {
     internal class Program
     {
@@ -101,7 +101,6 @@ namespace TheoryOfAlgorytms
         private static void Main(string[] args)
         {
             var lines = System.IO.File.ReadAllLines("1.txt");
-
             Sort(lines);
             Console.ReadKey();
         }
