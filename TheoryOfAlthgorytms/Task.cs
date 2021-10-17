@@ -99,7 +99,6 @@ namespace TheoryOfAlgorithms
                     break;
                 case 5:
                     Console.WriteLine("Merge");
-                    
                     (transposition, comparisons) = Sorting.MergeSortForStrings(strings, sortedIndexes, 0, strings.Length, ref transposition, ref comparisons);
                     break;
                 default:
