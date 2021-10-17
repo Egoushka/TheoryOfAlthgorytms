@@ -111,20 +111,21 @@ namespace TheoryOfAlgorithms
             return (transposition, comparisons);
         }
 
-        public static (ulong, ulong) MergeSortForStrings(string[] strings, int[] sortedIndexes, int lowIndex, int highIndex, ref ulong transposition, ref ulong comparisons)
+        public static (ulong, ulong) MergeSortForStrings(ref string[] strings, ref int[] sortedIndexes, int lowIndex, int highIndex, ref ulong transposition, ref ulong comparisons)
         {
             if (lowIndex < highIndex)
             {
                 var middleIndex = (lowIndex + highIndex) / 2;
-                MergeSortForStrings(strings, sortedIndexes, lowIndex, middleIndex, ref transposition, ref comparisons);
-                MergeSortForStrings(strings, sortedIndexes, middleIndex + 1, highIndex, ref transposition, ref comparisons);
-                MergeForStrings(strings, sortedIndexes, lowIndex, middleIndex, highIndex, ref transposition, ref comparisons);
+                MergeSortForStrings(ref strings, ref sortedIndexes, lowIndex, middleIndex + 1, ref transposition, ref comparisons);
+                MergeSortForStrings(ref strings, ref sortedIndexes, middleIndex + 1, highIndex, ref transposition, ref comparisons);
+
+                MergeForStrings(ref strings, ref sortedIndexes, lowIndex, middleIndex, highIndex, ref transposition, ref comparisons);
             }
 
             return (transposition, comparisons);
         }
 
-        private static void MergeForStrings(string[] strings, int[] sortedIndexes, int lowIndex, int middleIndex, int highIndex, ref ulong transposition, ref ulong comparisons)
+        private static void MergeForStrings(ref string[] strings, ref int[] sortedIndexes, int lowIndex, int middleIndex, int highIndex, ref ulong transposition, ref ulong comparisons)
         {
             var left = lowIndex;
             var right = middleIndex + 1;
@@ -172,42 +173,27 @@ namespace TheoryOfAlgorithms
             for (var i = 0; i < tempArrayInts.Length; i++)
             {
                 sortedIndexes[lowIndex + i] = tempArrayInts[i];
-                tempArrayStrings[index] = strings[i];
+                strings[lowIndex + i] = tempArrayStrings[i];
                 transposition++;
             }
         }
-
-        static void MergeSort(int[] numbers, int lowIndex, int highIndex)
-        {
-            if (lowIndex < highIndex)
-            {
-                var middleIndex = (lowIndex + highIndex) / 2;
-                MergeSort(numbers, lowIndex, middleIndex);
-                MergeSort( numbers, middleIndex + 1, highIndex);
-                Merge( numbers, lowIndex, middleIndex, highIndex);
-            }
-
-        }
-
-        private static void Merge(int[] numbers, int lowIndex, int middleIndex, int highIndex)
+        static void Merge(int[] array, int lowIndex, int middleIndex, int highIndex)
         {
             var left = lowIndex;
             var right = middleIndex + 1;
-
-            var tempArrayInts = new int[highIndex - lowIndex + 1];
-
+            var tempArray = new int[highIndex - lowIndex + 1];
             var index = 0;
 
-            while (left <= middleIndex && right <= highIndex)
+            while ((left <= middleIndex) && (right <= highIndex))
             {
-                if (numbers[left] < numbers[right])
+                if (array[left] < array[right])
                 {
-                    tempArrayInts[index] = numbers[left];
+                    tempArray[index] = array[left];
                     left++;
                 }
                 else
                 {
-                    tempArrayInts[index] = numbers[right];
+                    tempArray[index] = array[right];
                     right++;
                 }
 
@@ -216,20 +202,32 @@ namespace TheoryOfAlgorithms
 
             for (var i = left; i <= middleIndex; i++)
             {
-                tempArrayInts[index] = numbers[i];
+                tempArray[index] = array[i];
                 index++;
             }
 
             for (var i = right; i <= highIndex; i++)
             {
-                tempArrayInts[index] = numbers[i];
+                tempArray[index] = array[i];
                 index++;
             }
 
-            for (var i = 0; i < tempArrayInts.Length; i++)
+            for (var i = 0; i < tempArray.Length; i++)
             {
-                numbers[lowIndex + i] = tempArrayInts[i];
+                array[lowIndex + i] = tempArray[i];
             }
+        }
+        static int[] MergeSort(int[] array, int lowIndex, int highIndex)
+        {
+            if (lowIndex < highIndex)
+            {
+                var middleIndex = (lowIndex + highIndex) / 2;
+                MergeSort(array, lowIndex, middleIndex);
+                MergeSort(array, middleIndex + 1, highIndex);
+                Merge(array, lowIndex, middleIndex, highIndex);
+            }
+
+            return array;
         }
 
     }
