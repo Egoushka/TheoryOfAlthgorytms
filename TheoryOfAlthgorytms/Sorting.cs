@@ -4,7 +4,7 @@ namespace TheoryOfAlgorithms
 {
     internal static class Sorting
     {
-        public const int CountOfSortingMethods = 5;
+        public const int CountOfSortingMethods = 6;
 
         public static (ulong, ulong) BubbleSort(string[] strings, int[] sortedIndexes)
         {
