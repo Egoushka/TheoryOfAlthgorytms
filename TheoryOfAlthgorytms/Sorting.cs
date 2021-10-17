@@ -1,4 +1,6 @@
-﻿namespace TheoryOfAlgorithms
+﻿using System.Text.RegularExpressions;
+
+namespace TheoryOfAlgorithms
 {
     internal static class Sorting
     {
@@ -27,6 +29,7 @@
 
                 index2 = 0;
             }
+
             return (transposition, comparisons);
         }
 
@@ -50,6 +53,7 @@
                 (sortedIndexes[k], sortedIndexes[i]) = (sortedIndexes[i], sortedIndexes[k]);
                 (strings[k], strings[i]) = (strings[i], strings[k]);
             }
+
             return (transposition, comparisons);
         }
 
@@ -67,9 +71,12 @@
                     if (tmpInt < sortedIndexes[index2])
                     {
                         ++transposition;
+
                         sortedIndexes[index2 + 1] = sortedIndexes[index2];
                         strings[index2 + 1] = strings[index2];
+
                         index2--;
+
                         sortedIndexes[index2 + 1] = tmpInt;
                         strings[index2 + 1] = tmpStr;
                     }
@@ -77,6 +84,7 @@
                         break;
                 }
             }
+
             return (transposition, comparisons);
         }
 
@@ -102,5 +110,127 @@
 
             return (transposition, comparisons);
         }
+
+        public static (ulong, ulong) MergeSortForStrings(string[] strings, int[] sortedIndexes, int lowIndex, int highIndex, ref ulong transposition, ref ulong comparisons)
+        {
+            if (lowIndex < highIndex)
+            {
+                var middleIndex = (lowIndex + highIndex) / 2;
+                MergeSortForStrings(strings, sortedIndexes, lowIndex, middleIndex, ref transposition, ref comparisons);
+                MergeSortForStrings(strings, sortedIndexes, middleIndex + 1, highIndex, ref transposition, ref comparisons);
+                MergeForStrings(strings, sortedIndexes, lowIndex, middleIndex, highIndex, ref transposition, ref comparisons);
+            }
+
+            return (transposition, comparisons);
+        }
+
+        private static void MergeForStrings(string[] strings, int[] sortedIndexes, int lowIndex, int middleIndex, int highIndex, ref ulong transposition, ref ulong comparisons)
+        {
+            var left = lowIndex;
+            var right = middleIndex + 1;
+
+            var tempArrayInts = new int[highIndex - lowIndex + 1];
+            var tempArrayStrings = new string[highIndex - lowIndex + 1];
+
+            var index = 0;
+
+            while (left <= middleIndex && right <= highIndex)
+            {
+                if (sortedIndexes[left] < sortedIndexes[right])
+                {
+                    tempArrayInts[index] = sortedIndexes[left];
+                    tempArrayStrings[index] = strings[left];
+                    left++;
+                }
+                else
+                {
+                    tempArrayInts[index] = sortedIndexes[right];
+                    tempArrayStrings[index] = strings[right];
+                    right++;
+                }
+
+                comparisons++;
+                index++;
+            }
+
+            for (var i = left; i <= middleIndex; i++)
+            {
+                tempArrayInts[index] = sortedIndexes[i];
+                tempArrayStrings[index] = strings[i];
+                transposition++;
+                index++;
+            }
+
+            for (var i = right; i <= highIndex; i++)
+            {
+                tempArrayInts[index] = sortedIndexes[i];
+                tempArrayStrings[index] = strings[i];
+                transposition++;
+                index++;
+            }
+
+            for (var i = 0; i < tempArrayInts.Length; i++)
+            {
+                sortedIndexes[lowIndex + i] = tempArrayInts[i];
+                tempArrayStrings[index] = strings[i];
+                transposition++;
+            }
+        }
+
+        static void MergeSort(int[] numbers, int lowIndex, int highIndex)
+        {
+            if (lowIndex < highIndex)
+            {
+                var middleIndex = (lowIndex + highIndex) / 2;
+                MergeSort(numbers, lowIndex, middleIndex);
+                MergeSort( numbers, middleIndex + 1, highIndex);
+                Merge( numbers, lowIndex, middleIndex, highIndex);
+            }
+
+        }
+
+        private static void Merge(int[] numbers, int lowIndex, int middleIndex, int highIndex)
+        {
+            var left = lowIndex;
+            var right = middleIndex + 1;
+
+            var tempArrayInts = new int[highIndex - lowIndex + 1];
+
+            var index = 0;
+
+            while (left <= middleIndex && right <= highIndex)
+            {
+                if (numbers[left] < numbers[right])
+                {
+                    tempArrayInts[index] = numbers[left];
+                    left++;
+                }
+                else
+                {
+                    tempArrayInts[index] = numbers[right];
+                    right++;
+                }
+
+                index++;
+            }
+
+            for (var i = left; i <= middleIndex; i++)
+            {
+                tempArrayInts[index] = numbers[i];
+                index++;
+            }
+
+            for (var i = right; i <= highIndex; i++)
+            {
+                tempArrayInts[index] = numbers[i];
+                index++;
+            }
+
+            for (var i = 0; i < tempArrayInts.Length; i++)
+            {
+                numbers[lowIndex + i] = tempArrayInts[i];
+            }
+        }
+
     }
 }

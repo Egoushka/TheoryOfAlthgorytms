@@ -77,8 +77,8 @@ namespace TheoryOfAlgorithms
 
         private static void SelectSort(string[] strings, int[] sortedIndexes, int choice)
         {
-            ulong transposition;
-            ulong comparisons;
+            ulong transposition = 0;
+            ulong comparisons = 0;
             switch (choice)
             {
                 case 1:
@@ -96,6 +96,11 @@ namespace TheoryOfAlgorithms
                 case 4:
                     Console.WriteLine("Shell");
                     (transposition, comparisons) = Sorting.ShellSorting(strings, sortedIndexes);
+                    break;
+                case 5:
+                    Console.WriteLine("Merge");
+                    
+                    (transposition, comparisons) = Sorting.MergeSortForStrings(strings, sortedIndexes, 0, strings.Length, ref transposition, ref comparisons);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(choice), choice, null);
