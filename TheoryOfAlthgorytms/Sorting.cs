@@ -4,7 +4,7 @@ namespace TheoryOfAlgorithms
 {
     internal static class Sorting
     {
-        public const int CountOfSortingMethods = 6;
+        public const int CountOfSortingMethods = 5;
 
         public static (ulong, ulong) BubbleSort(string[] strings, int[] sortedIndexes)
         {
@@ -177,6 +177,18 @@ namespace TheoryOfAlgorithms
                 transposition++;
             }
         }
+        public static int[] MergeSort(int[] array, int lowIndex, int highIndex)
+        {
+            if (lowIndex < highIndex)
+            {
+                var middleIndex = (lowIndex + highIndex) / 2;
+                MergeSort(array, lowIndex, middleIndex);
+                MergeSort(array, middleIndex + 1, highIndex);
+                Merge(array, lowIndex, middleIndex, highIndex);
+            }
+
+            return array;
+        }
         static void Merge(int[] array, int lowIndex, int middleIndex, int highIndex)
         {
             var left = lowIndex;
@@ -217,18 +229,7 @@ namespace TheoryOfAlgorithms
                 array[lowIndex + i] = tempArray[i];
             }
         }
-        static int[] MergeSort(int[] array, int lowIndex, int highIndex)
-        {
-            if (lowIndex < highIndex)
-            {
-                var middleIndex = (lowIndex + highIndex) / 2;
-                MergeSort(array, lowIndex, middleIndex);
-                MergeSort(array, middleIndex + 1, highIndex);
-                Merge(array, lowIndex, middleIndex, highIndex);
-            }
-
-            return array;
-        }
+   
 
     }
 }

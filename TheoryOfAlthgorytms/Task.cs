@@ -63,7 +63,7 @@ namespace TheoryOfAlgorithms
             var tmp = (string[]) strings.Clone();
             var tmpIntegers = (int[]) sortedIndexes.Clone();
             var stopWatch = new Stopwatch();
-            for (var i = 1; i <= Sorting.CountOfSortingMethods; i++)
+            for (var i = 1; i < Sorting.CountOfSortingMethods; i++)
             {
                 stopWatch.Start();
                 SelectSort((string[]) tmp.Clone(), (int[]) tmpIntegers.Clone(), i);
@@ -96,10 +96,6 @@ namespace TheoryOfAlgorithms
                 case 4:
                     Console.WriteLine("Shell");
                     (transposition, comparisons) = Sorting.ShellSorting(strings, sortedIndexes);
-                    break;
-                case 5:
-                    Console.WriteLine("Merge");
-                    (transposition, comparisons) = Sorting.MergeSortForStrings(ref strings, ref sortedIndexes, 0, strings.Length, ref transposition, ref comparisons);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(choice), choice, null);
